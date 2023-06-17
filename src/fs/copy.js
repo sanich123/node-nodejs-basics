@@ -1,7 +1,7 @@
 import { access, constants } from "fs";
 import { join } from "path";
 import { fileURLToPath } from "url";
-import { removeSmthing, copySmthing } from "../utils/utils.js";
+import { copySmthing } from "../utils/utils.js";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
@@ -13,11 +13,8 @@ const copy = async () => {
     if (err) throw new Error("We have not been able to copy from a non-existing folder");
   });
   access(to, constants.F_OK, async (err) => {
-    if (!err) {
-      throw new Error("The destination folder have already been created earlier");
-    } else {
-      copySmthing(from, to);
-    }
+    if (!err) throw new Error("The destination folder have already been created earlier");
+    else copySmthing(from, to);
   });
 };
 
