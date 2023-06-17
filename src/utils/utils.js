@@ -1,4 +1,4 @@
-import { cp, access, constants } from "fs";
+import { cp, access, constants, unlink } from "fs";
 import { rm } from "fs/promises";
 
 export function copySmthing(origin, destination) {
@@ -25,6 +25,14 @@ export async function isFileNotExist(pathToFile) {
   return await access(pathToFile, constants.F_OK, (err) => {
     if (!err) {
       throw new Error("FS operation failed");
+    }
+  });
+}
+
+export async function unlinkFile(pathToFile) {
+  return await unlink(pathToFile, (err) => {
+    if (err) {
+      throw new Error("We were not able to unlink this existing file");
     }
   });
 }
