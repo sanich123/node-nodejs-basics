@@ -1,21 +1,20 @@
-import { access, constants, writeFile } from "fs";
+import { writeFile, access, constants } from "fs";
 import { join } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 const create = async () => {
-  const targetFolder = join(__dirname, "files");
-
-  access(join(targetFolder, "/fresh.txt"), constants.F_OK, (err) => {
-    if (!err) {
-      throw new Error("FS operation failed");
+  const targetFile = join(__dirname, "files/fresh.txt");
+  access(targetFile, constants.F_OK, (err) => {
+    if (err) {
+      writeFile(targetFile, "I am fresh and young", (err) => {
+        if (err) throw new Error(err.toString());
+        console.log("The file has been successfully saved!");
+      });
+    } else {
+      throw Error("Fs operation failed!");
     }
-  });
-
-  writeFile(join(targetFolder, "fresh.txt"), "I am fresh and young", (err) => {
-    if (err) throw err;
-    console.log("The file has been successfully saved!");
   });
 };
 

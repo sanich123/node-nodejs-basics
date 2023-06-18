@@ -1,4 +1,4 @@
-import { stdin, stdout } from "process";
+import { stdin } from "process";
 import { createWriteStream } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -10,7 +10,6 @@ const write = async () => {
   const fileName = join(__dirname, "files/fileToWrite.txt");
   const file = createWriteStream(fileName);
   stdin.pipe(file);
-  stdin.resume();
 };
 
 await write();
